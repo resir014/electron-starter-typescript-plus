@@ -1,0 +1,94 @@
+{
+  "name": "electron-starter-typescript-plus",
+  "productName": "Example App",
+  "version": "1.0.0",
+  "description": "An example of James Long's electron-with-server example, modified to work with Webpack + Electron Forge.",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "type-check": "tsc --noEmit",
+    "validate": "yarn lint && yarn type-check"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Resi Respati",
+    "email": "resir014@gmail.com"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "electron_with_server_webpack"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "win32"
+          ]
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/renderer/index.html",
+                  "js": "./src/renderer/index.ts",
+                  "preload": {
+                    "js": "./src/renderer/renderer-preload.ts"
+                  },
+                  "name": "renderer"
+                },
+                {
+                  "html": "./src/server/index.html",
+                  "js": "./src/server/index.ts",
+                  "name": "server"
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "dependencies": {
+    "electron-is-dev": "^1.2.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "eslint": "^7.17.0",
+    "eslint-config-blvd": "^1.1.1",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "nanoid": "^3.1.20",
+    "node-ipc": "^9.1.3"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.54",
+    "@electron-forge/maker-zip": "6.0.0-beta.54",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.54",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/node": "^14.14.20",
+    "@types/node-ipc": "^9.1.3",
+    "css-loader": "^5.0.1",
+    "electron": "11.2.0",
+    "node-loader": "^1.0.2",
+    "prettier": "^2.2.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.14",
+    "typescript": "^4.1.3"
+  }
+}
